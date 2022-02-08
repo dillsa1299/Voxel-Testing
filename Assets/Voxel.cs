@@ -4,52 +4,69 @@ using UnityEngine;
 
 public class Voxel : MonoBehaviour
 {
-    //world position is bottom-front-left of cube
-    public float worldX = 0;
-    public float worldY = 0;
-    public float worldZ = 0;
-
     private Vector3[] vertices;
     private int[] triangles;
+    private Vector3[] normals;
+    private Vector2[] uvMapping;
+
     // Start is called before the first frame update
     void Start()
     {
-        triangles = new[]
+        triangles = new[] //Vertex groups that make each triangle
         {
-            //Front
-            0, 4, 5,
-            0, 1, 5,
-            //Top
-            4, 6, 7,
-            4, 5, 7,
-            //Right
-            1, 5, 7,
-            1, 3, 7,
-            //Left
-            2, 6, 4,
-            2, 0, 4,
-            //Back
-            3, 7, 6,
-            3, 2, 6,
-            //Bottom
-            0, 2, 3,
-            0, 1, 3
+            0, 2, 1, //face front
+            0, 3, 2,
+            2, 3, 4, //face top
+            2, 4, 5,
+            1, 2, 5, //face right
+            1, 5, 6,
+            0, 7, 4, //face left
+            0, 4, 3,
+            5, 4, 7, //face back
+            5, 7, 6,
+            0, 6, 7, //face bottom
+            0, 1, 6
         };
-    }
 
-    void Update()
-    {
-        vertices = new[]
+        vertices = new[] //Vertices in the voxel
         {
-            new Vector3(worldX, worldY, worldZ), //0 Bottom-front-left
-            new Vector3(worldX+1, worldY, worldZ), //1 Bottom-front-right
-            new Vector3(worldX, worldY+1, worldZ), //2 Bottom-back-left
-            new Vector3(worldX+1, worldY+1, worldZ), //3 Bottom-back-right
-            new Vector3(worldX, worldY, worldZ+1), //4 Top-front-left
-            new Vector3(worldX+1, worldY, worldZ+1), //5 Top-front-right
-            new Vector3(worldX, worldY+1, worldZ+1), //6 Top-back-left
-            new Vector3(worldX+1, worldY+1, worldZ+1) //7 Top-back-right
+	        new Vector3 (0, 0, 0),
+	        new Vector3 (1, 0, 0),
+	        new Vector3 (1, 1, 0),
+            new Vector3 (0, 1, 0),
+	        new Vector3 (0, 1, 1),
+	        new Vector3 (1, 1, 1),
+	        new Vector3 (1, 0, 1),
+	        new Vector3 (0, 0, 1),
         };
+
+        normals = new[] //Normals for lighting
+        {
+            Vector3.up,Vector3.up,Vector3.up,
+            Vector3.up,Vector3.up,Vector3.up,
+            Vector3.up,Vector3.up
+        };
+
+        //UV map = X,Y
+        // 2x2 Grid, Bottom-Left = A, Bottom-Right = B, Top-Left = C
+        uvMapping = new[]
+        {
+            //Top & Bottom (A)
+			new Vector2(0, 0),
+            new Vector2(0.499f, 0),
+            new Vector2(0, 0.499f),
+            new Vector2(0.499f, 0.499f),
+            //Front & Back (B)
+			new Vector2(0.499f, 0),
+            new Vector2(1, 0),
+            new Vector2(0.499f, 0.499f),
+            new Vector2(1, 0.499f),
+            //Left & Right (C)
+			new Vector2(0, 0.5f),
+            new Vector2(0.499f, 0.5f),
+            new Vector2(0, 1),
+            new Vector2(0.499f, 1)
+		};	
     }
 
     public Vector3[] getVertices()
@@ -60,5 +77,15 @@ public class Voxel : MonoBehaviour
     public int[] getTriangles()
     {
         return triangles;
+    }
+
+    public Vector3[] getNormals()
+    {
+        return normals;
+    }
+
+    public Vector2[] getUVs()
+    {
+        return uvMapping;
     }
 }
