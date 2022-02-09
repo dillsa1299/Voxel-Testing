@@ -9,7 +9,6 @@ public class MeshGenerator : MonoBehaviour
 {
     private Voxel voxel;
     private MeshFilter meshFilter;
-    bool debug = true;
 
     void Start()
     {
@@ -51,23 +50,6 @@ public class MeshGenerator : MonoBehaviour
         mesh.SetVertices(vertices);
         mesh.SetTriangles(triangles.ToArray(), 0);
         mesh.SetNormals(normals);
-
-        Vector2[] uvs = new Vector2[vertices.Count];
-
-        for (int i = 0; i < uvs.Length; i++)
-        {
-            uvs[i] = new Vector2(vertices[i].x, vertices[i].z);
-        }
-
-        if(debug)
-        {
-            Debug.Log(uvs.Length);
-            debug=false;
-        }
-        mesh.uv = uvs;
-
-
-        //mesh.uv = voxel.getUVs();
         meshFilter.mesh = mesh;
     }
 }
