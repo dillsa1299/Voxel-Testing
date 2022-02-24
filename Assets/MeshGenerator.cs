@@ -7,12 +7,12 @@ using UnityEngine;
 
 public class MeshGenerator : MonoBehaviour
 {
-    private Voxel voxel;
+    private VoxelData voxelData;
     private MeshFilter meshFilter;
 
     void Start()
     {
-        voxel = gameObject.GetComponent<Voxel>();
+        voxelData = gameObject.GetComponent<VoxelData>();
         meshFilter = GetComponent<MeshFilter>();
     }
 
@@ -22,11 +22,11 @@ public class MeshGenerator : MonoBehaviour
         var triangles = new List<int>();
         var normals = new List<Vector3>();
 
-        for (int x = 0; x < worldArray.GetLength(0); x += 1)
+        for (int x = 0; x < worldArray.GetLength(0); x++)
         {
-            for (int y = 0; y < worldArray.GetLength(1); y += 1)
+            for (int y = 0; y < worldArray.GetLength(1); y++)
             {
-                for (int z = 0; z < worldArray.GetLength(1); z += 1)
+                for (int z = 0; z < worldArray.GetLength(1); z++)
                 {
                     var block = worldArray[x, y, z];//1=voxel, 0=air
                     //If air, skip
@@ -35,11 +35,11 @@ public class MeshGenerator : MonoBehaviour
                     var worldPos = new Vector3(x, y, z);
                     var verticesPos = vertices.Count;
 
-                    foreach (var vert in voxel.getVertices())
+                    foreach (var vert in voxelData.getVertices())
                         vertices.Add(worldPos + vert); //Voxel postion + cubes vertex
-                    foreach (var tri in voxel.getTriangles())
+                    foreach (var tri in voxelData.getTriangles())
                         triangles.Add(verticesPos + tri); //Position in vertices list for new vertex we just added
-                    foreach (var normal in voxel.getNormals())
+                    foreach (var normal in voxelData.getNormals())
                         normals.Add(normal);
                 }
             }

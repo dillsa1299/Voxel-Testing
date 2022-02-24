@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Voxel : MonoBehaviour
+public class VoxelData : MonoBehaviour
 {
     private Vector3[] vertices;
     private int[] triangles;
@@ -12,6 +12,18 @@ public class Voxel : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        vertices = new[] //Vertices in the voxel
+        {
+            new Vector3 (0, 1, 0),
+            new Vector3 (1, 0, 0),
+            new Vector3 (1, 1, 0),
+            new Vector3 (0, 1, 0),
+            new Vector3 (0, 1, 1),
+            new Vector3 (1, 1, 1),
+            new Vector3 (1, 0, 1),
+            new Vector3 (0, 0, 1),
+        };
+
         triangles = new[] //Vertex groups that make each triangle
         {
             0, 2, 1, //face front
@@ -26,18 +38,6 @@ public class Voxel : MonoBehaviour
             5, 7, 6,
             0, 6, 7, //face bottom
             0, 1, 6
-        };
-
-        vertices = new[] //Vertices in the voxel
-        {
-	        new Vector3 (0, 0, 0),
-	        new Vector3 (1, 0, 0),
-	        new Vector3 (1, 1, 0),
-            new Vector3 (0, 1, 0),
-	        new Vector3 (0, 1, 1),
-	        new Vector3 (1, 1, 1),
-	        new Vector3 (1, 0, 1),
-	        new Vector3 (0, 0, 1),
         };
 
         normals = new[] //Normals for lighting
@@ -88,4 +88,10 @@ public class Voxel : MonoBehaviour
     {
         return uvMapping;
     }
+}
+
+public class TextureData
+{
+    //public VoxelType voxelType;
+    public Vector2Int topBottom, frontBack, leftRight;
 }

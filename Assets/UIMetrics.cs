@@ -17,7 +17,7 @@ public class UIMetrics : MonoBehaviour
         {
             int fps = (int)(1f / Time.unscaledDeltaTime);
             _fpsText.text = "FPS: " + fps;
-            _tricountText.text = "Tri Count: " + (UnityEditor.UnityStats.triangles - 1744); //Skybox is 1744 tris
+            _tricountText.text = "Tri Count: " + (UnityEditor.UnityStats.triangles); //Skybox is 1744 tris
             _timer = Time.unscaledTime + _hudRefreshRate;
         }
     }
